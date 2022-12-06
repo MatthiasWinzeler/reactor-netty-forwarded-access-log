@@ -15,14 +15,8 @@
  */
 package reactor.netty.examples.http.helloworld;
 
-import io.netty.handler.ssl.util.SelfSignedCertificate;
 import reactor.core.publisher.Mono;
-import reactor.netty.http.Http11SslContextSpec;
-import reactor.netty.http.HttpProtocol;
 import reactor.netty.http.server.HttpServer;
-import reactor.netty.http.server.logging.AccessLog;
-import reactor.netty.http.server.logging.AccessLogArgProvider;
-import reactor.netty.http.server.logging.AccessLogFactory;
 
 import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_TYPE;
 import static io.netty.handler.codec.http.HttpHeaderValues.TEXT_PLAIN;
@@ -41,12 +35,7 @@ public final class HelloWorldServer {
                 HttpServer.create()
                         .port(PORT)
 						.forwarded(true)
-                        .accessLog(true, new AccessLogFactory() {
-                            @Override
-                            public AccessLog apply(AccessLogArgProvider accessLogArgProvider) {
-                                return null;
-                            }
-                        })
+                        .accessLog(true)
                         .route(r -> r.get("/hello",
                                 (req, res) -> res.header(CONTENT_TYPE, TEXT_PLAIN)
                                         .sendString(Mono.just(req.remoteAddress().toString()))));
