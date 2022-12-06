@@ -34,7 +34,7 @@ public final class HelloWorldServer {
         HttpServer server =
                 HttpServer.create()
                         .port(PORT)
-						.forwarded(true)
+                        .forwarded(true)
                         .accessLog(true)
                         .route(r -> r.get("/hello",
                                 (req, res) -> res.header(CONTENT_TYPE, TEXT_PLAIN)
